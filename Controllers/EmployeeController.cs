@@ -3,6 +3,7 @@ using Employee_Management_System.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace Employee_Management_System.Controllers
 {
@@ -27,6 +28,17 @@ namespace Employee_Management_System.Controllers
         public IActionResult Get(int id)
         {
             var keyvalueFromDb = _repository.employees.Find(id);
+            if (keyvalueFromDb == null)
+            {
+                return NotFound();
+            }
+            return Ok(keyvalueFromDb);
+        }
+
+        [HttpGet("Dep/{id}")]
+        public IActionResult GetEmployeeByDepId(int id)
+        {
+            var keyvalueFromDb = _repository.employees.Where(a=>a.Department_Id == id);
             if (keyvalueFromDb == null)
             {
                 return NotFound();
