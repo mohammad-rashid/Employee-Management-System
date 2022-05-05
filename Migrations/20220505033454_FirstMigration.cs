@@ -10,13 +10,13 @@ namespace Employee_Management_System.Migrations
                 name: "departments",
                 columns: table => new
                 {
-                    Department_Id = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Department_Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_departments", x => x.Department_Id);
+                    table.PrimaryKey("PK_departments", x => x.DepartmentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,23 +30,23 @@ namespace Employee_Management_System.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Qualification = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Contact = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Department_Id = table.Column<int>(type: "int", nullable: true)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_employees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_employees_departments_Department_Id",
-                        column: x => x.Department_Id,
+                        name: "FK_employees_departments_DepartmentId",
+                        column: x => x.DepartmentId,
                         principalTable: "departments",
-                        principalColumn: "Department_Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_employees_Department_Id",
+                name: "IX_employees_DepartmentId",
                 table: "employees",
-                column: "Department_Id");
+                column: "DepartmentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -3,6 +3,7 @@ using Employee_Management_System.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace Employee_Management_System.Controllers
 {
@@ -37,8 +38,8 @@ namespace Employee_Management_System.Controllers
         [HttpPost]
         public IActionResult Post(Department inputData)
         {
-            var dbData = _repository.departments.Find(inputData.Department_Id);
-            if (dbData != null)
+           
+            if (_repository.departments.Any(a => a.DepartmentName == inputData.DepartmentName))
             {
                 return Conflict();
             }
@@ -55,10 +56,10 @@ namespace Employee_Management_System.Controllers
             }
         }
 
-        [HttpPut]
-        public IActionResult Put(Department inputData)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Department inputData)
         {
-            var dbData = _repository.departments.Find(inputData.Department_Id);
+            var dbData = _repository.departments.Find(id);
             if (dbData == null)
             {
                 return NotFound();
@@ -66,7 +67,7 @@ namespace Employee_Management_System.Controllers
 
             try
             {
-                dbData.Department_Name = inputData.Department_Name;
+                dbData.DepartmentName = inputData.DepartmentName;
                 _repository.SaveChanges();
                 return Ok();
             }

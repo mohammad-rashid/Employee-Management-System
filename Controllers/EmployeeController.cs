@@ -38,7 +38,7 @@ namespace Employee_Management_System.Controllers
         [HttpGet("Dep/{id}")]
         public IActionResult GetEmployeeByDepId(int id)
         {
-            var keyvalueFromDb = _repository.employees.Where(a=>a.Department_Id == id);
+            var keyvalueFromDb = _repository.employees.Where(a=>a.DepartmentId == id);
             if (keyvalueFromDb == null)
             {
                 return NotFound();
@@ -49,8 +49,7 @@ namespace Employee_Management_System.Controllers
         [HttpPost]
         public IActionResult Post(Employee inputData)
         {
-            var dbData = _repository.departments.Find(inputData.Id);
-            if (dbData != null)
+            if (_repository.employees.Any(a => a.Name == inputData.Name && a.Contact == inputData.Contact))
             {
                 return Conflict();
             }
@@ -67,10 +66,10 @@ namespace Employee_Management_System.Controllers
             }
         }
 
-        [HttpPut]
-        public IActionResult Put(Employee inputData)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Employee inputData)
         {
-            var dbData = _repository.employees.Find(inputData.Id);
+            var dbData = _repository.employees.Find(id);
             if (dbData == null)
             {
                 return NotFound();
@@ -84,7 +83,8 @@ namespace Employee_Management_System.Controllers
                 dbData.Address = inputData.Address;
                 dbData.Qualification = inputData.Qualification;
                 dbData.Contact = inputData.Contact;
-                dbData.department = inputData.department;
+                dbData.DepartmentId = inputData.DepartmentId;
+
                 _repository.SaveChanges();
                 return Ok();
             }
