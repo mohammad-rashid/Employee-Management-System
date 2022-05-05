@@ -77,7 +77,6 @@ namespace Employee_Management_System.Controllers
 
             try
             {
-                dbData.Id = inputData.Id;
                 dbData.Name = inputData.Name;
                 dbData.Surname = inputData.Surname;
                 dbData.Address = inputData.Address;
