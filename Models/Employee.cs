@@ -12,7 +12,7 @@ namespace Employee_Management_System.Models
         public string Address { get; set; }
         public string Qualification { get; set; }
         public string Contact { get; set; }
-      
+        [Required(ErrorMessage ="Department ID is Required!")]
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
     }

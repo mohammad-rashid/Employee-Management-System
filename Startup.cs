@@ -46,6 +46,7 @@ namespace Employee_Management_System
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
